@@ -16,7 +16,6 @@
             background-color: black;
         }
         
-        /* تأثيرات الانتقال بين المراحل */
         .phase { 
             display: none; flex-direction: column; align-items: center; justify-content: center; 
             height: 100vh; text-align: center; padding: 20px; box-sizing: border-box;
@@ -26,7 +25,6 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
-        /* الثيم البناتي الفخم (Gradient) */
         .pink-theme { 
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); 
             color: #4a4a4a;
@@ -35,7 +33,6 @@
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
         }
 
-        /* ستايل الصناديق الزجاجية (Glassmorphism) */
         .glass-box { 
             background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(10px);
@@ -68,65 +65,25 @@
         input[type=range] { width: 90%; margin: 30px 0; accent-color: #ff477e; height: 8px; border-radius: 5px; outline: none; }
         #sliderMsg { color: #ff4d4d; font-weight: bold; min-height: 25px; margin-top: 10px; font-size: 1.1em; }
 
-        /* --- المحطة 4: صندوق الفايكنج السحري --- */
-        #chestArea { height: 200px; display: flex; justify-content: center; align-items: center; perspective: 1000px; margin: 20px 0; }
-        .viking-chest { 
-            width: 120px; height: 90px; position: relative; cursor: pointer; 
-            transition: transform 0.5s ease; transform-style: preserve-3d;
-        }
-        .viking-chest .base { 
-            width: 100%; height: 60%; background: linear-gradient(to bottom, #5c3a21, #3e2723); 
-            position: absolute; bottom: 0; border: 3px solid #b8860b; border-radius: 5px; 
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.3); 
-        }
-        /* تفاصيل الصندوق (خطوط خشبية وقفل) */
-        .viking-chest .base::before { content: ''; position: absolute; top: 0; bottom: 0; left: 20px; right: 20px; border-left: 2px solid #3e2723; border-right: 2px solid #3e2723; }
-        .viking-chest .base::after { content: ''; width: 15px; height: 20px; background: #ffd700; position: absolute; top: -5px; left: 50%; transform: translateX(-50%); border-radius: 3px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        
-        .viking-chest .lid { 
-            width: 100%; height: 40%; background: linear-gradient(to bottom, #6d4c41, #5c3a21); 
-            position: absolute; top: 0; border: 3px solid #b8860b; border-radius: 30px 30px 0 0; 
-            transform-origin: bottom; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-        }
-        /* حركة فتح الصندوق */
-        .viking-chest.open .lid { transform: rotateX(110deg); }
-
+        /* --- المحطة 4: الصندوق بالصورة --- */
+        #chestArea { margin: 20px 0; display: flex; justify-content: center; align-items: center; min-height: 250px; }
+        #theChestImg { width: 250px; cursor: pointer; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-radius: 15px; }
         .meme-container { display: none; flex-direction: column; align-items: center; animation: fadeIn 1s; }
         
-        /* --- المحطة 5: الكيكة (10 طوابق) والمعايدة --- */
-        .cake-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin-bottom: 30px; margin-top: 20px; height: 250px; }
-        .tier { 
-            background: linear-gradient(to right, #ffb6c1, #ff69b4, #ffb6c1); 
-            border: 2px solid #fff; border-bottom: 3px dotted #fff;
-            border-radius: 10px 10px 5px 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            margin-bottom: -2px; /* لتتداخل الطوابق قليلاً */
-        }
-        /* أحجام الطوابق من 10 (العلوي) إلى 1 (القاعدة) */
-        .tier10 { width: 60px; height: 20px; position: relative; }
-        .tier9 { width: 80px; height: 20px; }
-        .tier8 { width: 100px; height: 20px; }
-        .tier7 { width: 120px; height: 20px; }
-        .tier6 { width: 140px; height: 20px; }
-        .tier5 { width: 160px; height: 20px; }
-        .tier4 { width: 180px; height: 20px; }
-        .tier3 { width: 200px; height: 20px; }
-        .tier2 { width: 220px; height: 20px; }
-        .tier1 { width: 240px; height: 25px; }
-
-        /* الشموع فوق الطابق العاشر */
-        .candles-container { position: absolute; top: -30px; left: 0; width: 100%; display: flex; justify-content: space-around; }
-        .candle { font-size: 25px; cursor: pointer; transition: transform 0.2s; user-select: none; }
+        /* --- المحطة 5: الكيكة بالصورة والمعايدة --- */
+        #cakeArea { position: relative; max-width: 350px; margin: 20px auto; display: block; }
+        #theCakeImg { width: 100%; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: block; }
+        .candles-container { position: absolute; top: 18%; left: 0; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 10; }
+        .candle { font-size: 35px; cursor: pointer; transition: transform 0.2s; user-select: none; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
         .candle:hover { transform: scale(1.2); }
 
-        /* رسالة المعايدة الفخمة */
         #finalMessage { display: none; }
         .greeting-text { 
             font-size: 1.4em; color: #333; line-height: 1.8; text-align: center; 
-            background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; 
+            background: rgba(255,255,255,0.95); padding: 30px; border-radius: 20px; 
             border: 2px dashed #ff758c; margin-top: 20px; font-weight: 700;
         }
-        .highlight { color: #ff477e; font-size: 1.2em; font-weight: 900; }
+        .highlight { color: #ff477e; font-size: 1.3em; font-weight: 900; }
         
         #amenBtn { margin-top: 20px; font-size: 1.5em; padding: 15px 50px; background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4); }
     </style>
@@ -168,10 +125,7 @@
             <p id="boxText">افتحي الصندوق حتى تشوفين الهدية اللي مستحيل أنساها هالسنة.</p>
             
             <div id="chestArea">
-                <div class="viking-chest" id="theChest">
-                    <div class="lid"></div>
-                    <div class="base"></div>
-                </div>
+                <img src="chest.png" id="theChestImg" alt="صندوق الهدية">
             </div>
             
             <div class="meme-container" id="memeResult">
@@ -182,32 +136,21 @@
     </div>
 
     <div id="phase5" class="phase pink-theme">
-        <div class="glass-box" style="max-width: 700px; width: 95%;" id="cakeSection">
+        <div class="glass-box" style="max-width: 800px; width: 95%;" id="cakeSection">
             <h2 id="candleText">طفي الشموع بسرعة (اضغطي عليهن) قبل لا تخلص أمنياتج! ✨</h2>
             
-            <div class="cake-wrapper" id="theCake">
-                <div class="tier tier10">
-                    <div class="candles-container" id="candlesContainer">
-                        <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                        <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                        <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                        <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                        <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    </div>
+            <div id="cakeArea">
+                <img src="cake.png" id="theCakeImg" alt="كيكة عيد الميلاد">
+                <div class="candles-container" id="candlesContainer">
+                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
                 </div>
-                <div class="tier tier9"></div>
-                <div class="tier tier8"></div>
-                <div class="tier tier7"></div>
-                <div class="tier tier6"></div>
-                <div class="tier tier5"></div>
-                <div class="tier tier4"></div>
-                <div class="tier tier3"></div>
-                <div class="tier tier2"></div>
-                <div class="tier tier1"></div>
             </div>
 
             <div id="finalMessage">
-                <h2>🎉 هابي بيرثداي جنات! 🎉</h2>
                 <div class="greeting-text">
                     <span class="highlight">كل عام وانتي بالف خير جنات</span> ✨<br><br>
                     ياربي تحقيق الاماني وتحصلين المعدل الي يرضيج بالسادس ودوام الصحة والعافية والتوفيق وتحققين كل احلامج واهدافج ونشوفج باعلى الاماكن ان شاء الله.
@@ -218,7 +161,6 @@
     </div>
 
     <script>
-        // التنقل بين المراحل
         function goToPhase(phaseNum) {
             document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
             const nextPhase = document.getElementById('phase' + phaseNum);
@@ -244,13 +186,14 @@
             if (currentText < texts.length) {
                 terminalElement.innerHTML += texts[currentText] + "<br><br>";
                 currentText++;
-                setTimeout(typeWriter, 1000);
+                setTimeout(typeWriter, 1200);
             } else {
                 document.getElementById("dangerText").style.display = "block";
+                // تأخير 6 ثواني حتى تلحك تقرأ براحتها
                 setTimeout(() => {
                     document.body.style.backgroundColor = "#FDF0F0";
                     goToPhase(2);
-                }, 3500);
+                }, 6000); 
             }
         }
         window.onload = typeWriter;
@@ -263,27 +206,24 @@
 
         runawayBtn.addEventListener("mouseover", () => {
             if (attempt < 5) {
-                // حساب مساحة التحرك داخل الحاوية المخصصة
                 const maxX = runawayContainer.clientWidth - runawayBtn.clientWidth;
                 const maxY = runawayContainer.clientHeight - runawayBtn.clientHeight;
-                
                 const randomX = Math.floor(Math.random() * maxX);
                 const randomY = Math.floor(Math.random() * maxY);
 
                 runawayBtn.style.left = randomX + "px";
                 runawayBtn.style.top = randomY + "px";
-                runawayBtn.style.transform = "translate(0, 0)"; // إلغاء التوسيط المركزي بعد أول حركة
+                runawayBtn.style.transform = "translate(0, 0)"; 
                 attempt++;
             }
         });
 
         runawayBtn.addEventListener("click", () => {
-            if (attempt >= 5 || true) { // السماح بالضغط إذا مسكته
-                runawayMsg.innerHTML = "والله طلعتي سريعة! أوكي أوكي، كافي عناد، تفضلي.";
-                runawayMsg.style.display = "block";
-                runawayBtn.style.display = "none";
-                setTimeout(() => goToPhase(3), 3000);
-            }
+            runawayMsg.innerHTML = "والله طلعتي سريعة! أوكي أوكي، كافي عناد، تفضلي.";
+            runawayMsg.style.display = "block";
+            runawayBtn.style.display = "none";
+            // تأخير 5 ثواني
+            setTimeout(() => goToPhase(3), 5000); 
         });
 
         /* --- المرحلة 3: مؤشر العناد --- */
@@ -298,38 +238,33 @@
                 sliderMsg.style.color = "#2ed573";
                 sliderMsg.innerText = "بالضبط! هسة نعترف بيج.. جاري الدخول للاحتفال 🎉";
                 slider.disabled = true;
-                setTimeout(() => goToPhase(4), 2000);
+                // تأخير 4 ثواني
+                setTimeout(() => goToPhase(4), 4000);
             }
         });
 
-        /* --- المرحلة 4: صندوق الفايكنج --- */
-        const theChest = document.getElementById("theChest");
+        /* --- المرحلة 4: الصندوق (تصغير الصورة لتبدو كصندوق داخل صندوق) --- */
+        const theChestImg = document.getElementById("theChestImg");
         const memeResult = document.getElementById("memeResult");
         const boxText = document.getElementById("boxText");
         let chestClicks = 0;
         let chestScale = 1;
 
-        theChest.addEventListener("click", () => {
-            if(chestClicks >= 3) return;
-            
-            // فتح الغطاء
-            theChest.classList.add("open");
+        theChestImg.addEventListener("click", () => {
+            if(chestClicks >= 4) return;
             chestClicks++;
             
-            setTimeout(() => {
-                // إغلاق الغطاء وتصغير الصندوق (كأنه صندوق جديد بداخله)
-                theChest.classList.remove("open");
-                chestScale -= 0.25;
-                theChest.style.transform = `scale(${chestScale})`;
-                
-                if(chestClicks === 3) {
-                    setTimeout(() => {
-                        document.getElementById("chestArea").style.display = "none";
-                        boxText.style.display = "none";
-                        memeResult.style.display = "flex";
-                    }, 500);
-                }
-            }, 600); // ينتظر 600 ملي ثانية قبل ما يغلق ويصغر
+            // تصغير الصورة بنسبة معينة مع كل ضغطة
+            chestScale -= 0.18;
+            theChestImg.style.transform = `scale(${chestScale})`;
+            
+            if(chestClicks === 4) {
+                setTimeout(() => {
+                    document.getElementById("chestArea").style.display = "none";
+                    boxText.style.display = "none";
+                    memeResult.style.display = "flex";
+                }, 600);
+            }
         });
 
         /* --- المرحلة 5: الشموع والمعايدة --- */
@@ -342,12 +277,13 @@
                 extinguishedCandles++;
                 
                 if(extinguishedCandles === 5) {
+                    // تأخير 3 ثواني بعد طفي آخر شمعة
                     setTimeout(() => {
                         document.getElementById("candleText").style.display = "none";
-                        document.getElementById("theCake").style.display = "none";
+                        document.getElementById("cakeArea").style.display = "none";
                         document.getElementById("finalMessage").style.display = "block";
-                        triggerConfetti(3); // إطلاق مبدئي
-                    }, 500);
+                        triggerConfetti(3); 
+                    }, 2000);
                 }
             }
         }
@@ -359,13 +295,11 @@
             btn.disabled = true;
             btn.style.background = "linear-gradient(45deg, #ff758c 0%, #ff7eb3 100%)";
             
-            // انفجار كبير للقصاصات الملونة
             triggerConfetti(7);
             setTimeout(() => triggerConfetti(10), 1000);
             setTimeout(() => triggerConfetti(5), 2000);
         }
 
-        // دالة إطلاق القصاصات الملونة (الكونفيتي)
         function triggerConfetti(seconds) {
             var duration = seconds * 1000;
             var end = Date.now() + duration;
