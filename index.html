@@ -65,16 +65,62 @@
         input[type=range] { width: 90%; margin: 30px 0; accent-color: #ff477e; height: 8px; border-radius: 5px; outline: none; }
         #sliderMsg { color: #ff4d4d; font-weight: bold; min-height: 25px; margin-top: 10px; font-size: 1.1em; }
 
-        /* --- المحطة 4: الصندوق بالصورة --- */
-        #chestArea { margin: 20px 0; display: flex; justify-content: center; align-items: center; min-height: 250px; }
-        #theChestImg { width: 250px; cursor: pointer; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-radius: 15px; }
+        /* --- المحطة 4: رسم صندوق الفايكنج بالـ CSS --- */
+        #chestArea { margin: 20px 0; display: flex; justify-content: center; align-items: center; min-height: 250px; perspective: 1000px; }
+        .css-chest { 
+            width: 240px; cursor: pointer; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-radius: 15px;
+        }
+        .chest-lid { 
+            height: 80px; background: linear-gradient(to right, #d48e9e, #eda1b2, #d48e9e); 
+            border-radius: 120px 120px 0 0; border: 4px solid #4a4a4a; border-bottom: 2px solid #222;
+            position: relative; overflow: hidden;
+        }
+        .chest-base { 
+            height: 110px; background: linear-gradient(to right, #c27d8d, #d48e9e, #c27d8d); 
+            border: 4px solid #4a4a4a; border-top: none; border-radius: 0 0 15px 15px; position: relative;
+        }
+        .iron-band { position: absolute; background: linear-gradient(to right, #333, #555, #333); width: 25px; height: 100%; top: 0; box-shadow: inset 0 0 5px rgba(0,0,0,0.8); }
+        .iron-band.left { left: 40px; }
+        .iron-band.right { right: 40px; }
+        .chest-lock { 
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%); 
+            width: 35px; height: 50px; background: #333; border: 3px solid #111; 
+            border-radius: 8px; z-index: 5; box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .chest-lock::after { content: ''; width: 12px; height: 18px; background: #111; border-radius: 50% 50% 0 0; }
+        .carving { position: absolute; width: 100%; text-align: center; top: 40px; color: rgba(0,0,0,0.15); font-weight: bold; font-family: serif; letter-spacing: 8px; font-size: 1.2rem; }
+
         .meme-container { display: none; flex-direction: column; align-items: center; animation: fadeIn 1s; }
         
-        /* --- المحطة 5: الكيكة بالصورة والمعايدة --- */
-        #cakeArea { position: relative; max-width: 350px; margin: 20px auto; display: block; }
-        #theCakeImg { width: 100%; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); display: block; }
-        .candles-container { position: absolute; top: 18%; left: 0; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 10; }
-        .candle { font-size: 35px; cursor: pointer; transition: transform 0.2s; user-select: none; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+        /* --- المحطة 5: رسم الكيكة الفخمة بالـ CSS --- */
+        #cakeArea { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; margin: 30px auto 20px; min-height: 300px; }
+        .css-cake { display: flex; flex-direction: column; align-items: center; position: relative; }
+        .tier { 
+            background: linear-gradient(to right, #f9c5d1, #fff0f5, #f9c5d1); 
+            border: 2px solid #fff; border-bottom: 5px dotted #fff; /* محاكاة لزينة اللؤلؤ */
+            border-radius: 12px 12px 4px 4px; 
+            box-shadow: inset 0 -6px 10px rgba(0,0,0,0.04), 0 5px 10px rgba(0,0,0,0.08); 
+            margin-bottom: -3px; display: flex; justify-content: center; align-items: center; overflow: hidden;
+        }
+        /* نقوش وردية بسيطة على كل طابق */
+        .tier::before { content: '❀ ❀ ❀'; color: rgba(255, 105, 180, 0.3); font-size: 0.9em; letter-spacing: 10px; }
+        
+        .tier10 { width: 70px; height: 25px; z-index: 10; position: relative; }
+        .tier10::before { content: ''; } /* مسح النقش للطابق العلوي لتوفير مساحة للشموع */
+        .tier9 { width: 90px; height: 25px; z-index: 9; }
+        .tier8 { width: 110px; height: 25px; z-index: 8; }
+        .tier7 { width: 130px; height: 30px; z-index: 7; }
+        .tier6 { width: 150px; height: 30px; z-index: 6; }
+        .tier5 { width: 170px; height: 30px; z-index: 5; }
+        .tier4 { width: 190px; height: 35px; z-index: 4; }
+        .tier3 { width: 210px; height: 35px; z-index: 3; }
+        .tier2 { width: 230px; height: 35px; z-index: 2; }
+        .tier1 { width: 260px; height: 40px; z-index: 1; border-bottom: 12px solid #fff; }
+
+        .candles-container { position: absolute; top: -45px; left: 0; width: 100%; display: flex; justify-content: space-around; z-index: 15; }
+        .candle { font-size: 32px; cursor: pointer; transition: transform 0.2s; user-select: none; text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
         .candle:hover { transform: scale(1.2); }
 
         #finalMessage { display: none; }
@@ -125,7 +171,18 @@
             <p id="boxText">افتحي الصندوق حتى تشوفين الهدية اللي مستحيل أنساها هالسنة.</p>
             
             <div id="chestArea">
-                <img src="chest.png" id="theChestImg" alt="صندوق الهدية">
+                <div class="css-chest" id="theChestVisual">
+                    <div class="chest-lid">
+                        <div class="iron-band left"></div>
+                        <div class="iron-band right"></div>
+                    </div>
+                    <div class="chest-base">
+                        <div class="iron-band left"></div>
+                        <div class="iron-band right"></div>
+                        <div class="carving">ᚠ ᚨ ᛁ ᚲ ᛁ ᚾ ᚷ</div>
+                        <div class="chest-lock"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="meme-container" id="memeResult">
@@ -140,13 +197,25 @@
             <h2 id="candleText">طفي الشموع بسرعة (اضغطي عليهن) قبل لا تخلص أمنياتج! ✨</h2>
             
             <div id="cakeArea">
-                <img src="cake.png" id="theCakeImg" alt="كيكة عيد الميلاد">
-                <div class="candles-container" id="candlesContainer">
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                <div class="css-cake">
+                    <div class="tier tier10">
+                        <div class="candles-container" id="candlesContainer">
+                            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+                        </div>
+                    </div>
+                    <div class="tier tier9"></div>
+                    <div class="tier tier8"></div>
+                    <div class="tier tier7"></div>
+                    <div class="tier tier6"></div>
+                    <div class="tier tier5"></div>
+                    <div class="tier tier4"></div>
+                    <div class="tier tier3"></div>
+                    <div class="tier tier2"></div>
+                    <div class="tier tier1"></div>
                 </div>
             </div>
 
@@ -189,7 +258,7 @@
                 setTimeout(typeWriter, 1200);
             } else {
                 document.getElementById("dangerText").style.display = "block";
-                // تأخير 6 ثواني حتى تلحك تقرأ براحتها
+                // تأخير 6 ثواني
                 setTimeout(() => {
                     document.body.style.backgroundColor = "#FDF0F0";
                     goToPhase(2);
@@ -243,20 +312,20 @@
             }
         });
 
-        /* --- المرحلة 4: الصندوق (تصغير الصورة لتبدو كصندوق داخل صندوق) --- */
-        const theChestImg = document.getElementById("theChestImg");
+        /* --- المرحلة 4: الصندوق المرسوم بالـ CSS --- */
+        const theChestVisual = document.getElementById("theChestVisual");
         const memeResult = document.getElementById("memeResult");
         const boxText = document.getElementById("boxText");
         let chestClicks = 0;
         let chestScale = 1;
 
-        theChestImg.addEventListener("click", () => {
+        theChestVisual.addEventListener("click", () => {
             if(chestClicks >= 4) return;
             chestClicks++;
             
-            // تصغير الصورة بنسبة معينة مع كل ضغطة
+            // تصغير الصندوق
             chestScale -= 0.18;
-            theChestImg.style.transform = `scale(${chestScale})`;
+            theChestVisual.style.transform = `scale(${chestScale})`;
             
             if(chestClicks === 4) {
                 setTimeout(() => {
@@ -277,18 +346,17 @@
                 extinguishedCandles++;
                 
                 if(extinguishedCandles === 5) {
-                    // تأخير 3 ثواني بعد طفي آخر شمعة
+                    // تأخير 3 ثواني
                     setTimeout(() => {
                         document.getElementById("candleText").style.display = "none";
                         document.getElementById("cakeArea").style.display = "none";
                         document.getElementById("finalMessage").style.display = "block";
                         triggerConfetti(3); 
-                    }, 2000);
+                    }, 3000);
                 }
             }
         }
 
-        /* زر أمين النهائي */
         function sayAmen() {
             const btn = document.getElementById("amenBtn");
             btn.innerText = "يا رب تتحقق! 💖";
