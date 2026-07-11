@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة جنات</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* التنسيقات العامة */
+        body, html { margin: 0; padding: 0; height: 100vh; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.5s ease; }
+        .phase { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; padding: 20px; box-sizing: border-box; }
+        .active { display: flex; }
+        
+        /* ألوان بناتية للمراحل بعد الاختراق */
+        .pink-theme { background-color: #FDF0F0; color: #D27676; }
+        .pink-theme h2 { color: #F77B7B; }
+        
+        /* المحطة 1: الهكر */
+        #phase1 { background-color: black; color: #0f0; font-family: 'Courier New', Courier, monospace; align-items: flex-start; justify-content: flex-start; padding: 50px; text-align: left; direction: ltr; }
+        .danger { color: red; font-weight: bold; animation: blink 0.5s infinite; margin-top: 20px; font-size: 1.2em; direction: rtl; text-align: center; width: 100%; display: none; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* المحطة 2: الزر الهارب */
+        .box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 80%; max-width: 500px; position: relative; min-height: 200px;}
+        #runawayBtn { background-color: #F77B7B; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-size: 1.1em; position: absolute; left: 50%; top: 60%; transform: translate(-50%, -50%); transition: top 0.1s, left 0.1s; }
+        
+        /* المحطة 3: مؤشر العناد */
+        input[type=range] { width: 80%; margin: 20px 0; accent-color: #F77B7B; }
+        #sliderMsg { color: red; font-weight: bold; min-height: 20px; margin-top: 10px; }
+
+        /* المحطة 4: الصندوق اللانهائي */
+        #giftBox { font-size: 100px; cursor: pointer; transition: transform 0.2s; user-select: none; }
+        #giftBox:active { transform: scale(0.9); }
+        .meme-container { display: none; flex-direction: column; align-items: center; }
+        .meme-container span { font-size: 80px; }
+        .next-btn { background-color: #F77B7B; color: white; border: none; padding: 10px 20px; border-radius: 15px; cursor: pointer; margin-top: 20px; font-size: 1em; }
+
+        /* المحطة 5: الشموع والتهنئة */
+        .candles { display: flex; gap: 20px; font-size: 60px; margin-bottom: 20px; cursor: pointer; user-select: none; }
+        .candle { transition: transform 0.2s; }
+        .candle:active { transform: scale(0.8); }
+        #finalMessage { display: none; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 600px; line-height: 1.6; font-size: 1.2em; }
+    </style>
+</head>
+<body>
+
+    <div id="phase1" class="phase active">
+        <div id="terminalText"></div>
+        <div id="dangerText" class="danger">⚠️ تم اختراق جهازكِ بنجاح! جاري استرجاع ملفات عيد الميلاد المفقودة... ⚠️</div>
+    </div>
+
+    <div id="phase2" class="phase pink-theme">
+        <div class="box">
+            <h2>اختبار الصبر</h2>
+            <p>بما أنه السنة الفاتت صارت 'خيانة عظمى' ونسيت عيد ميلادج، هالسنة قررت أعوضج.. اضغطي على الزر حتى تستلمين الهدية والاعتذار الرسمي.</p>
+            <button id="runawayBtn">استلام الهدية 🎁</button>
+            <p id="runawayMsg" style="color:red; display:none; margin-top: 80px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <div id="phase3" class="phase pink-theme">
+        <div class="box">
+            <h2>مقياس المود اليوم</h2>
+            <p>قبل لا نفوت للاحتفال، لازم النظام يتأكد من حالتج النفسية. حددي نسبة العناد والنكد مالتج لليوم:</p>
+            <span style="font-size: 2em;">😤</span>
+            <input type="range" id="moodSlider" min="0" max="100" value="0">
+            <span style="font-size: 2em;">😈</span>
+            <div id="sliderMsg"></div>
+        </div>
+    </div>
+
+    <div id="phase4" class="phase pink-theme">
+        <div class="box" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2>الهدية المنتظرة</h2>
+            <p id="boxText">افتحي الصندوق حتى تشوفين الهدية اللي مستحيل أنساها هالسنة.</p>
+            <div id="giftBox">📦</div>
+            
+            <div class="meme-container" id="memeResult">
+                <span>😾</span>
+                <p>توقعتي أكو هدية صدك؟ اني بلكوة تذكرت التاريخ! 😂</p>
+                <button class="next-btn" onclick="goToPhase(5)">اضحكي اضحكي.. اضغطي هنا للاحتفال الحقيقي</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="phase5" class="phase pink-theme">
+        <h2 id="candleText">طفي الشموع بسرعة (اضغطي عليهن) قبل لا تخلص أمنياتج! 🎂</h2>
+        <div class="candles" id="candlesContainer">
+            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+            <div class="candle" onclick="blowCandle(this)">🕯️</div>
+        </div>
+        
+        <div id="finalMessage">
+            <h2>🎉 هابي بيرثداي جنات! 🎉</h2>
+            <p>كل عام وأنتِ بألف خير يا صديقتي!</p>
+            <p>أدري السنة الفاتت جبت العيد (حرفياً ومجازياً)، بس هالسنة اني أول المتذكرين. يارب سنة حلوة تشبهج، وتخففين بيها عناد شوية لأن تعبتينا.</p>
+            <p><strong>✨ أتمنالج سنة كلها نجاح وضحك ✨</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // دالة التنقل بين المراحل
+        function goToPhase(phaseNum) {
+            document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+            document.getElementById('phase' + phaseNum).classList.add('active');
+            
+            if(phaseNum > 1) {
+                document.body.style.backgroundColor = "#FDF0F0"; // تحويل الخلفية للون الوردي
+            }
+        }
+
+        /* --- كود المحطة 1: الاختراق --- */
+        const texts = [
+            "Connecting to server...",
+            "Scanning target...",
+            "Target Name: Jannat",
+            "Error 404: Birthday data for last year is MISSING!",
+            "System Alert: High levels of Stubbornness detected! ⚠️"
+        ];
+        let currentText = 0;
+        const terminalElement = document.getElementById("terminalText");
+        
+        function typeWriter() {
+            if (currentText < texts.length) {
+                terminalElement.innerHTML += texts[currentText] + "<br><br>";
+                currentText++;
+                setTimeout(typeWriter, 1200);
+            } else {
+                document.getElementById("dangerText").style.display = "block";
+                setTimeout(() => goToPhase(2), 3500); // الانتقال للمرحلة 2 بعد 3.5 ثواني
+            }
+        }
+        window.onload = typeWriter; // تشغيل الهكر عند فتح الموقع
+
+        /* --- كود المحطة 2: الزر الهارب --- */
+        const runawayBtn = document.getElementById("runawayBtn");
+        const runawayMsg = document.getElementById("runawayMsg");
+        let attempt = 0;
+
+        runawayBtn.addEventListener("mouseover", () => {
+            if (attempt < 4) {
+                const box = document.querySelector("#phase2 .box");
+                const maxX = box.clientWidth - runawayBtn.clientWidth;
+                const maxY = box.clientHeight - runawayBtn.clientHeight;
+                
+                runawayBtn.style.left = Math.random() * maxX + "px";
+                runawayBtn.style.top = Math.random() * maxY + "px";
+                attempt++;
+            }
+        });
+
+        runawayBtn.addEventListener("click", () => {
+            if (attempt >= 4) {
+                runawayMsg.innerHTML = "والله طلعتي سريعة! أوكي أوكي، كافي عناد، تفضلي.";
+                runawayMsg.style.display = "block";
+                runawayBtn.style.display = "none";
+                setTimeout(() => goToPhase(3), 3000);
+            }
+        });
+
+        /* --- كود المحطة 3: مؤشر العناد --- */
+        const slider = document.getElementById("moodSlider");
+        const sliderMsg = document.getElementById("sliderMsg");
+
+        slider.addEventListener("input", function() {
+            if (this.value < 100) {
+                sliderMsg.innerText = "كذابة! نعرفج زين، سحبيه للـ 100% حتى ينفتح الموقع";
+            } else {
+                sliderMsg.style.color = "green";
+                sliderMsg.innerText = "بالضبط! هسة نعترف بيج.. جاري الدخول للاحتفال 🎉";
+                setTimeout(() => goToPhase(4), 2000);
+            }
+        });
+
+        /* --- كود المحطة 4: الصندوق اللانهائي --- */
+        const giftBox = document.getElementById("giftBox");
+        const memeResult = document.getElementById("memeResult");
+        const boxText = document.getElementById("boxText");
+        let boxClicks = 0;
+        let boxSize = 100;
+
+        giftBox.addEventListener("click", () => {
+            boxClicks++;
+            if(boxClicks < 4) {
+                boxSize -= 20;
+                giftBox.style.fontSize = boxSize + "px";
+            } else {
+                giftBox.style.display = "none";
+                boxText.style.display = "none";
+                memeResult.style.display = "flex";
+            }
+        });
+
+        /* --- كود المحطة 5: الشموع والتهنئة --- */
+        let extinguishedCandles = 0;
+        function blowCandle(element) {
+            if(element.innerText === "🕯️") {
+                element.innerText = "💨"; // تحويل الشمعة لدخان
+                element.style.cursor = "default";
+                extinguishedCandles++;
+                
+                if(extinguishedCandles === 3) {
+                    document.getElementById("candleText").style.display = "none";
+                    document.getElementById("candlesContainer").style.display = "none";
+                    document.getElementById("finalMessage").style.display = "block";
+                    triggerConfetti();
+                }
+            }
+        }
+
+        // دالة إطلاق القصاصات الملونة
+        function triggerConfetti() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#F77B7B', '#D27676', '#FFDAB9']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#F77B7B', '#D27676', '#FFDAB9']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+    </script>
+</body>
+</html>
