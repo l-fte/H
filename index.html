@@ -94,13 +94,12 @@
 
         .meme-container { display: none; flex-direction: column; align-items: center; animation: fadeIn 1s; }
         
-        /* --- المحطة 5: الكيكة المصغرة والشموع المرتبة --- */
-        /* تصغير الكيكة والشموع بنسبة 75% لتكون أنيقة وملمومة */
+        /* --- المحطة 5: الكيكة المصغرة وشمعتين --- */
         #cakeArea { position: relative; display: flex; flex-direction: column; align-items: center; margin: 10px auto; transform: scale(0.75); }
         
-        /* ترتيب الشموع لتجلس تماماً فوق الطابق الأخير */
-        .candles-container { display: flex; justify-content: center; gap: 4px; z-index: 20; margin-bottom: -10px; }
-        .candle { font-size: 40px; cursor: pointer; transition: transform 0.2s; user-select: none; text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
+        /* التعديل هنا: سحب الشموع للأسفل لتلامس الكيكة بدون فراغ */
+        .candles-container { display: flex; justify-content: center; gap: 15px; z-index: 20; margin-bottom: -12px; }
+        .candle { font-size: 45px; line-height: 1; cursor: pointer; transition: transform 0.2s; user-select: none; text-shadow: 0 0 15px rgba(255, 255, 255, 0.9); }
         .candle:hover { transform: scale(1.2); }
 
         .css-cake { display: flex; flex-direction: column; align-items: center; position: relative; }
@@ -113,9 +112,8 @@
         }
         .tier::before { content: '❀ ❀ ❀'; color: rgba(255, 105, 180, 0.4); font-size: 1.1em; letter-spacing: 12px; }
         
-        /* أحجام الطوابق لتتناسب مع الشموع */
         .tier10 { width: 100px; height: 25px; z-index: 10; }
-        .tier10::before { content: ''; } /* مسح الورد من الطابق العلوي لترتيب الشموع */
+        .tier10::before { content: ''; } 
         .tier9 { width: 120px; height: 25px; z-index: 9; }
         .tier8 { width: 140px; height: 25px; z-index: 8; }
         .tier7 { width: 160px; height: 25px; z-index: 7; }
@@ -201,9 +199,6 @@
             
             <div id="cakeArea">
                 <div class="candles-container" id="candlesContainer">
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
-                    <div class="candle" onclick="blowCandle(this)">🕯️</div>
                     <div class="candle" onclick="blowCandle(this)">🕯️</div>
                     <div class="candle" onclick="blowCandle(this)">🕯️</div>
                 </div>
@@ -344,7 +339,8 @@
                 element.style.opacity = "0.5";
                 extinguishedCandles++;
                 
-                if(extinguishedCandles === 5) {
+                // التعديل هنا: يطلب طفي شمعتين فقط للاستمرار
+                if(extinguishedCandles === 2) {
                     setTimeout(() => {
                         document.getElementById("candleText").style.display = "none";
                         document.getElementById("cakeArea").style.display = "none";
